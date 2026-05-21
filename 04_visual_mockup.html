@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>PraxisPulse — Clickable Mockup</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background: #F7FAFC; color: #1A202C; }
+.app { display: grid; grid-template-columns: 220px 1fr; min-height: 100vh; }
+@media (max-width: 768px) { .app { grid-template-columns: 1fr; } .sidebar { display: none; } }
+
+/* Sidebar */
+.sidebar { background: #fff; border-right: 1px solid #E2E8F0; padding: 24px 16px; display: flex; flex-direction: column; }
+.logo { font-size: 20px; font-weight: 700; color: #0E9F6E; margin-bottom: 32px; display: flex; align-items: center; gap: 8px; }
+.logo-dot { width: 24px; height: 24px; background: #0E9F6E; border-radius: 50%; position: relative; }
+.logo-dot::after { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 10px; height: 10px; background: #fff; border-radius: 50%; }
+.nav-section { font-size: 11px; text-transform: uppercase; color: #A0AEC0; font-weight: 600; letter-spacing: 0.5px; margin: 16px 0 8px 12px; }
+.nav-item { padding: 10px 12px; border-radius: 8px; color: #4A5568; font-size: 14px; cursor: pointer; display: flex; align-items: center; gap: 10px; margin-bottom: 2px; }
+.nav-item:hover { background: #EDF2F7; }
+.nav-item.active { background: #C6F6D5; color: #0E9F6E; font-weight: 600; }
+.nav-icon { width: 18px; height: 18px; display: inline-block; }
+.role-switch { margin-top: auto; padding-top: 16px; border-top: 1px solid #E2E8F0; }
+.role-switch label { font-size: 11px; color: #718096; margin-bottom: 6px; display: block; }
+.role-switch select { width: 100%; padding: 8px 10px; border: 1px solid #E2E8F0; border-radius: 6px; font-size: 13px; background: #fff; }
+
+/* Main */
+.main { padding: 24px 32px; overflow-y: auto; }
+@media (max-width: 768px) { .main { padding: 16px; } }
+.topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+.topbar h1 { font-size: 22px; font-weight: 700; }
+.topbar .sub { color: #718096; font-size: 13px; margin-top: 2px; }
+.search { padding: 8px 12px; border: 1px solid #E2E8F0; border-radius: 8px; font-size: 13px; width: 240px; background: #fff; }
+
+/* KPI cards */
+.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 24px; }
+.kpi { background: #fff; padding: 16px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); border: 1px solid #EDF2F7; }
+.kpi .lbl { font-size: 11px; color: #718096; text-transform: uppercase; letter-spacing: 0.5px; }
+.kpi .val { font-size: 26px; font-weight: 700; color: #1A202C; margin-top: 6px; }
+.kpi .delta { font-size: 12px; margin-top: 4px; }
+.delta.up { color: #0E9F6E; } .delta.down { color: #E53E3E; } .delta.flat { color: #A0AEC0; }
+
+/* Grid */
+.grid { display: grid; grid-template-columns: 2fr 1fr; gap: 16px; margin-bottom: 16px; }
+@media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+@media (max-width: 900px) { .grid2 { grid-template-columns: 1fr; } }
+.card { background: #fff; padding: 18px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); border: 1px solid #EDF2F7; }
+.card h3 { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+.card .subt { font-size: 12px; color: #718096; margin-bottom: 14px; }
+
+/* Insights */
+.insight { padding: 12px; background: #F7FAFC; border-left: 3px solid #0E9F6E; border-radius: 6px; margin-bottom: 10px; }
+.insight.high { border-left-color: #E53E3E; }
+.insight.med { border-left-color: #ED8936; }
+.insight .hl { font-size: 13px; font-weight: 600; }
+.insight .ev { font-size: 12px; color: #718096; margin-top: 4px; }
+.insight .ac { font-size: 12px; color: #0E9F6E; margin-top: 6px; font-weight: 500; }
+.pill { display: inline-block; padding: 2px 8px; font-size: 10px; font-weight: 600; border-radius: 99px; }
+.pill.high { background: #FED7D7; color: #C53030; }
+.pill.med { background: #FEEBC8; color: #C05621; }
+.pill.low { background: #C6F6D5; color: #276749; }
+
+/* Tables */
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th { text-align: left; color: #718096; font-weight: 500; font-size: 11px; text-transform: uppercase; padding: 8px; border-bottom: 1px solid #E2E8F0; }
+td { padding: 10px 8px; border-bottom: 1px solid #F7FAFC; }
+tr:hover { background: #F7FAFC; }
+.badge { display: inline-block; padding: 3px 8px; font-size: 11px; font-weight: 600; border-radius: 99px; }
+.badge.green { background: #C6F6D5; color: #276749; }
+.badge.amber { background: #FEEBC8; color: #C05621; }
+.badge.red { background: #FED7D7; color: #C53030; }
+.btn { padding: 6px 12px; font-size: 12px; border-radius: 6px; border: 1px solid #0E9F6E; background: #fff; color: #0E9F6E; cursor: pointer; font-weight: 500; }
+.btn:hover { background: #C6F6D5; }
+.btn-primary { background: #0E9F6E; color: #fff; }
+.btn-primary:hover { background: #08825A; }
+
+/* Tabs */
+.tabs { display: flex; gap: 4px; border-bottom: 1px solid #E2E8F0; margin-bottom: 16px; }
+.tab { padding: 10px 14px; font-size: 13px; color: #718096; cursor: pointer; border-bottom: 2px solid transparent; }
+.tab.active { color: #0E9F6E; border-bottom-color: #0E9F6E; font-weight: 600; }
+
+.hidden { display: none !important; }
+
+canvas { max-height: 220px; }
+</style>
+</head>
+<body>
+<div class="app">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="logo"><span class="logo-dot"></span> PraxisPulse</div>
+
+    <div class="nav-section">Main</div>
+    <div class="nav-item active" onclick="show('pulse')"><span class="nav-icon">📊</span> Pulse</div>
+    <div class="nav-item" onclick="show('today')"><span class="nav-icon">📅</span> Today</div>
+    <div class="nav-item" onclick="show('patients')"><span class="nav-icon">👥</span> Patients</div>
+    <div class="nav-item" onclick="show('insights')"><span class="nav-icon">💡</span> Insights</div>
+    <div class="nav-item" onclick="show('growth')"><span class="nav-icon">📈</span> Growth</div>
+
+    <div class="nav-section">Data</div>
+    <div class="nav-item" onclick="show('upload')"><span class="nav-icon">📤</span> Upload CSV</div>
+    <div class="nav-item" onclick="show('settings')"><span class="nav-icon">⚙️</span> Settings</div>
+
+    <div class="role-switch">
+      <label>VIEW AS ROLE</label>
+      <select onchange="setRole(this.value)">
+        <option value="owner">Owner / Dr. Mehta</option>
+        <option value="front_desk">Front Desk / Priya</option>
+        <option value="doctor">Associate / Dr. Bose</option>
+        <option value="accountant">Accountant / Mr. Shah</option>
+      </select>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <main class="main">
+
+    <!-- PULSE -->
+    <section id="pulse">
+      <div class="topbar">
+        <div>
+          <h1>Good morning, Dr. Mehta 👋</h1>
+          <div class="sub">Smile Dental Clinic, Indore · Tuesday, 20 May 2026</div>
+        </div>
+        <input class="search" placeholder="Search patients, appointments…" />
+      </div>
+
+      <div class="kpis">
+        <div class="kpi"><div class="lbl">Today's Revenue</div><div class="val">₹18,400</div><div class="delta up">▲ 12% vs avg Tue</div></div>
+        <div class="kpi"><div class="lbl">Collected Today</div><div class="val">₹15,200</div><div class="delta flat">₹3,200 pending</div></div>
+        <div class="kpi"><div class="lbl">Patients Seen</div><div class="val">9</div><div class="delta up">▲ 2 vs avg</div></div>
+        <div class="kpi"><div class="lbl">No-shows</div><div class="val">2</div><div class="delta down">▼ vs avg 1.5</div></div>
+        <div class="kpi"><div class="lbl">MTD vs Target</div><div class="val">68%</div><div class="delta up">on pace</div></div>
+      </div>
+
+      <div class="grid">
+        <div class="card">
+          <h3>Revenue Trend &amp; Forecast</h3>
+          <div class="subt">Last 90 days actual + next 30 days forecast (95% confidence band)</div>
+          <canvas id="trendChart"></canvas>
+        </div>
+        <div class="card">
+          <h3>Top Insights This Week</h3>
+          <div class="subt">3 priority items</div>
+          <div class="insight high">
+            <span class="pill high">HIGH</span>
+            <div class="hl" style="margin-top:6px;">Mrs. Anjali Sharma (top 8% LTV) is overdue for recall</div>
+            <div class="ev">Last visit 181 days ago · ₹42k lifetime · 81% churn risk</div>
+            <div class="ac">→ Send Hindi recall WhatsApp today</div>
+          </div>
+          <div class="insight med">
+            <span class="pill med">MED</span>
+            <div class="hl" style="margin-top:6px;">Saturday 11am slot only 38% utilized</div>
+            <div class="ev">12 of last 16 Saturdays had this hour empty</div>
+            <div class="ac">→ Promote Sat 11am for cleaning packages</div>
+          </div>
+          <div class="insight">
+            <span class="pill low">LOW</span>
+            <div class="hl" style="margin-top:6px;">Whitening revenue is up 34% MoM</div>
+            <div class="ev">7 sessions in May vs 5 in April · ₹56k vs ₹40k</div>
+            <div class="ac">→ Add Instagram before/after content</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid2">
+        <div class="card">
+          <h3>Treatment Mix</h3>
+          <div class="subt">Last 30 days by revenue</div>
+          <canvas id="mixChart"></canvas>
+        </div>
+        <div class="card">
+          <h3>Top 10 Patients by LTV</h3>
+          <div class="subt">Lifetime spend</div>
+          <table>
+            <tr><th>Patient</th><th>LTV</th><th>Last visit</th><th>Status</th></tr>
+            <tr><td>Lakshmi Iyer</td><td>₹58,500</td><td>12 May</td><td><span class="badge green">VIP</span></td></tr>
+            <tr><td>Anjali Sharma</td><td>₹42,000</td><td>20 Nov '25</td><td><span class="badge red">At risk</span></td></tr>
+            <tr><td>Karthik Nair</td><td>₹38,400</td><td>10 Apr</td><td><span class="badge green">Regular</span></td></tr>
+            <tr><td>Amit Joshi</td><td>₹32,200</td><td>13 May</td><td><span class="badge green">VIP</span></td></tr>
+            <tr><td>Divya Singh</td><td>₹28,900</td><td>15 May</td><td><span class="badge green">Regular</span></td></tr>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- TODAY (front desk) -->
+    <section id="today" class="hidden">
+      <div class="topbar">
+        <div>
+          <h1>Today's Schedule</h1>
+          <div class="sub">Tuesday, 20 May 2026 · 9 appointments booked</div>
+        </div>
+        <div>
+          <button class="btn">+ Patient</button>
+          <button class="btn btn-primary">+ Appointment</button>
+        </div>
+      </div>
+
+      <div class="grid">
+        <div class="card">
+          <h3>Today's Appointments</h3>
+          <div class="subt">Tap any row to open the patient profile</div>
+          <table>
+            <tr><th>Time</th><th>Patient</th><th>Doctor</th><th>Type</th><th>Risk</th><th>Action</th></tr>
+            <tr><td>10:00</td><td>Karthik Nair</td><td>Dr. Mehta</td><td>Cleaning</td><td><span class="badge green">Low</span></td><td><button class="btn">Confirm</button></td></tr>
+            <tr><td>11:00</td><td>Anjali Sharma</td><td>Dr. Mehta</td><td>Consultation</td><td><span class="badge red">High</span></td><td><button class="btn">Call to confirm</button></td></tr>
+            <tr><td>12:00</td><td>Lakshmi Iyer</td><td>Dr. Mehta</td><td>Root canal · session 3</td><td><span class="badge green">Low</span></td><td><button class="btn">Confirmed</button></td></tr>
+            <tr><td>14:00</td><td>Amit Joshi</td><td>Dr. Mehta</td><td>Follow-up</td><td><span class="badge amber">Med</span></td><td><button class="btn">Send reminder</button></td></tr>
+            <tr><td>16:00</td><td>Pooja Reddy</td><td>Dr. Bose</td><td>Consultation</td><td><span class="badge green">Low</span></td><td><button class="btn">Confirm</button></td></tr>
+          </table>
+        </div>
+
+        <div>
+          <div class="card" style="margin-bottom:16px;">
+            <h3>Recall Queue · 7 patients</h3>
+            <div class="subt">Sorted by LTV — highest value first</div>
+            <table>
+              <tr><th>Patient</th><th>Last visit</th><th>LTV</th></tr>
+              <tr><td>Anjali Sharma</td><td>181d ago</td><td>₹42k</td></tr>
+              <tr><td>Rohit Mehta</td><td>192d ago</td><td>₹18k</td></tr>
+              <tr><td>Sneha Verma</td><td>205d ago</td><td>₹14k</td></tr>
+            </table>
+            <button class="btn btn-primary" style="margin-top:10px;width:100%;">📱 Send WhatsApp recall to all 7</button>
+          </div>
+
+          <div class="card">
+            <h3>Outstanding Dues · ₹8,400</h3>
+            <table>
+              <tr><th>Patient</th><th>Days</th><th>Amount</th></tr>
+              <tr><td>Lakshmi Iyer</td><td>8</td><td>₹1,500</td></tr>
+              <tr><td>Mr. Verma</td><td>14</td><td>₹3,200</td></tr>
+              <tr><td>Aarav P. (parent)</td><td>21</td><td>₹3,700</td></tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PATIENTS LIST → PROFILE -->
+    <section id="patients" class="hidden">
+      <div class="topbar"><h1>Patient — Anjali Sharma</h1></div>
+      <div class="card" style="margin-bottom:16px;">
+        <div style="display:flex;gap:20px;align-items:center;">
+          <div style="width:64px;height:64px;border-radius:50%;background:#C6F6D5;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:700;color:#0E9F6E;">AS</div>
+          <div style="flex:1;">
+            <div style="font-size:20px;font-weight:700;">Anjali Sharma <span class="badge red">At-risk</span> <span class="badge green">VIP · top 8% LTV</span></div>
+            <div style="color:#718096;font-size:13px;margin-top:4px;">Age 41 · +91 98765 43210 · Hindi · Last visit: 20 Nov 2025 (181 days)</div>
+          </div>
+          <div>
+            <button class="btn">📱 WhatsApp</button>
+            <button class="btn btn-primary">+ Book appointment</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="tabs">
+        <div class="tab active">Timeline</div>
+        <div class="tab">Notes</div>
+        <div class="tab">AI Insights</div>
+        <div class="tab">Treatments</div>
+      </div>
+
+      <div class="card">
+        <h3>Visit Timeline</h3>
+        <table>
+          <tr><th>Date</th><th>Treatment</th><th>Doctor</th><th>Amount</th><th>Status</th></tr>
+          <tr><td>20 Nov 2025</td><td>Scaling &amp; polishing</td><td>Dr. Mehta</td><td>₹2,500</td><td><span class="badge green">Paid</span></td></tr>
+          <tr><td>14 May 2025</td><td>Composite filling (×2)</td><td>Dr. Mehta</td><td>₹6,000</td><td><span class="badge green">Paid</span></td></tr>
+          <tr><td>10 Nov 2024</td><td>Root canal · 3 sessions</td><td>Dr. Mehta</td><td>₹14,500</td><td><span class="badge green">Paid</span></td></tr>
+          <tr><td>05 May 2024</td><td>Scaling &amp; polishing</td><td>Dr. Mehta</td><td>₹2,200</td><td><span class="badge green">Paid</span></td></tr>
+        </table>
+      </div>
+    </section>
+
+    <!-- INSIGHTS INBOX -->
+    <section id="insights" class="hidden">
+      <div class="topbar"><h1>Insights Inbox</h1><div class="sub">12 open · 3 high priority</div></div>
+      <div class="card">
+        <div class="insight high">
+          <span class="pill high">HIGH</span>
+          <div class="hl" style="margin-top:6px;">Mrs. Anjali Sharma (top 8% LTV) is overdue for recall</div>
+          <div class="ev">Last visit 181 days ago · ₹42k lifetime · 81% churn risk</div>
+          <div class="ac">→ Send Hindi recall WhatsApp today</div>
+          <div style="margin-top:8px;"><button class="btn btn-primary">Send WhatsApp</button> <button class="btn">Snooze 7 days</button> <button class="btn">Dismiss</button></div>
+        </div>
+        <div class="insight med">
+          <span class="pill med">MED</span>
+          <div class="hl" style="margin-top:6px;">Saturday 11am slot only 38% utilized over last 4 months</div>
+          <div class="ev">12 of last 16 Saturdays had this hour empty · ₹0 from this slot</div>
+          <div class="ac">→ Promote Sat 11am for cleaning packages or pediatric checkups</div>
+        </div>
+        <div class="insight med">
+          <span class="pill med">MED</span>
+          <div class="hl" style="margin-top:6px;">Composite filling revenue down 22% MoM</div>
+          <div class="ev">May: ₹18k from 6 fillings · April: ₹23k from 8 fillings</div>
+          <div class="ac">→ Check if a competitor opened nearby; ask patients during consultation</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- GROWTH -->
+    <section id="growth" class="hidden">
+      <div class="topbar"><h1>Growth &amp; Lead Generation</h1></div>
+      <div class="kpis">
+        <div class="kpi"><div class="lbl">New patients this month</div><div class="val">14</div><div class="delta up">▲ 4 vs last month</div></div>
+        <div class="kpi"><div class="lbl">Recall conversion</div><div class="val">42%</div><div class="delta up">▲ 8pp</div></div>
+        <div class="kpi"><div class="lbl">Active referrers</div><div class="val">9</div><div class="delta flat">flat</div></div>
+        <div class="kpi"><div class="lbl">Avg LTV (new patient)</div><div class="val">₹14,200</div><div class="delta up">▲ 12%</div></div>
+      </div>
+      <div class="grid2">
+        <div class="card">
+          <h3>Acquisition by Source · last 90 days</h3>
+          <canvas id="sourceChart"></canvas>
+        </div>
+        <div class="card">
+          <h3>Patients to Ask for Google Review</h3>
+          <div class="subt">Recently happy, high LTV, no review yet</div>
+          <table>
+            <tr><th>Patient</th><th>Last visit</th><th>LTV</th><th></th></tr>
+            <tr><td>Lakshmi Iyer</td><td>12 May</td><td>₹58k</td><td><button class="btn">Ask</button></td></tr>
+            <tr><td>Karthik Nair</td><td>10 Apr</td><td>₹38k</td><td><button class="btn">Ask</button></td></tr>
+            <tr><td>Sneha Verma</td><td>15 May</td><td>₹29k</td><td><button class="btn">Ask</button></td></tr>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- UPLOAD CSV -->
+    <section id="upload" class="hidden">
+      <div class="topbar"><h1>Import Data</h1><div class="sub">Drag and drop your 3 CSV files</div></div>
+      <div class="grid2">
+        <div class="card">
+          <h3>1. Patients CSV</h3>
+          <div class="subt">One row per patient (master record)</div>
+          <div style="border:2px dashed #CBD5E0;border-radius:8px;padding:32px;text-align:center;color:#718096;">
+            📤 Drop file here or click to browse<br/><span style="font-size:11px;">.csv up to 50MB</span>
+          </div>
+          <div style="margin-top:12px;font-size:12px;color:#718096;">Required columns: full_name, phone</div>
+        </div>
+        <div class="card">
+          <h3>2. Appointments CSV</h3>
+          <div class="subt">One row per appointment</div>
+          <div style="border:2px dashed #CBD5E0;border-radius:8px;padding:32px;text-align:center;color:#718096;">
+            📤 Drop file here<br/><span style="font-size:11px;">.csv up to 50MB</span>
+          </div>
+        </div>
+      </div>
+      <div class="card" style="margin-top:16px;">
+        <h3>Column Mapping Preview · Patients</h3>
+        <div class="subt">We detected your headers — map them to PraxisPulse fields</div>
+        <table>
+          <tr><th>Your column</th><th>→</th><th>PraxisPulse field</th><th>Sample value</th></tr>
+          <tr><td>"Patient Name"</td><td>→</td><td>full_name ✓</td><td>Anjali Sharma</td></tr>
+          <tr><td>"Mobile No"</td><td>→</td><td>phone ✓</td><td>+919876543210</td></tr>
+          <tr><td>"Email ID"</td><td>→</td><td>email ✓</td><td>anjali.s@example.com</td></tr>
+          <tr><td>"Reg Date"</td><td>→</td><td>first_visit_date ✓</td><td>2024-05-05</td></tr>
+        </table>
+        <div style="margin-top:14px;">
+          <button class="btn btn-primary">✓ Looks good — import 247 rows</button>
+          <button class="btn">Cancel</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="settings" class="hidden">
+      <div class="topbar"><h1>Settings</h1></div>
+      <div class="card"><h3>Clinic Profile</h3><div class="subt">Smile Dental Clinic · Indore · 2 chairs · 2 doctors · Solo plan ₹1,499/mo</div></div>
+      <div class="card" style="margin-top:16px;"><h3>Team</h3><table><tr><th>Name</th><th>Email</th><th>Role</th></tr><tr><td>Dr. Mehta</td><td>mehta@smile.in</td><td>Owner</td></tr><tr><td>Priya Sharma</td><td>priya@smile.in</td><td>Front Desk</td></tr><tr><td>Dr. Bose</td><td>bose@smile.in</td><td>Doctor</td></tr></table></div>
+    </section>
+
+  </main>
+</div>
+
+<script>
+function show(id){
+  document.querySelectorAll('main > section').forEach(s=>s.classList.add('hidden'));
+  document.getElementById(id).classList.remove('hidden');
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  event.target.closest('.nav-item').classList.add('active');
+}
+function setRole(role){
+  const nav = document.querySelectorAll('.nav-item');
+  if (role==='front_desk') { show.call({target:document.querySelectorAll('.nav-item')[1]}, 'today'); document.querySelectorAll('.nav-item')[1].click?.(); }
+}
+
+new Chart(document.getElementById('trendChart'), {
+  type:'line',
+  data:{
+    labels: ['Feb','','','','Mar','','','','Apr','','','','May','','Forecast','','Jun'],
+    datasets:[
+      { label:'Actual', data:[14000,15200,16100,15800,16400,17200,18100,17900,18400,19200,18800,19400,20100,20800,null,null,null], borderColor:'#0E9F6E', backgroundColor:'transparent', tension:.3, pointRadius:0 },
+      { label:'Forecast', data:[null,null,null,null,null,null,null,null,null,null,null,null,null,20800,21400,22100,22800], borderColor:'#4F8CFF', borderDash:[5,4], backgroundColor:'transparent', tension:.3, pointRadius:0 },
+      { label:'Upper', data:[null,null,null,null,null,null,null,null,null,null,null,null,null,20800,22600,23400,24200], borderColor:'transparent', backgroundColor:'rgba(79,140,255,0.15)', fill:'+1', pointRadius:0 },
+      { label:'Lower', data:[null,null,null,null,null,null,null,null,null,null,null,null,null,20800,20200,20800,21400], borderColor:'transparent', backgroundColor:'rgba(79,140,255,0.15)', fill:false, pointRadius:0 },
+    ]
+  },
+  options:{responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}}}
+});
+
+new Chart(document.getElementById('mixChart'), {
+  type:'doughnut',
+  data:{ labels:['Cleaning','Restorative','Endodontics','Cosmetic','Surgery','Other'],
+    datasets:[{ data:[28,22,18,14,12,6], backgroundColor:['#0E9F6E','#4F8CFF','#ED8936','#9F7AEA','#E53E3E','#A0AEC0'] }]},
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{font:{size:11}}}}}
+});
+
+new Chart(document.getElementById('sourceChart'), {
+  type:'bar',
+  data:{ labels:['Google','Instagram','Referral','Walk-in','Insurance'],
+    datasets:[{ label:'New patients', data:[18,14,11,9,6], backgroundColor:'#0E9F6E' }]},
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}}}
+});
+</script>
+</body>
+</html>
