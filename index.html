@@ -478,13 +478,13 @@ footer .footer-copy { color: #718096; margin-top: 20px; }
               <label for="wl-specialty">Your specialty *</label>
               <select id="wl-specialty" name="specialty" required>
                 <option value="" disabled selected>Select specialty</option>
-                <option value="dentist">Dentist / Dental Surgeon</option>
-                <option value="dermatologist">Dermatologist</option>
-                <option value="gynaecologist">Gynaecologist / Obstetrician</option>
-                <option value="ent">ENT Specialist</option>
-                <option value="gp">General Practitioner</option>
-                <option value="aesthetics">Aesthetics &amp; Wellness</option>
-                <option value="other">Other — please specify below</option>
+                <option value="Dentist / Dental Surgeon">Dentist / Dental Surgeon</option>
+                <option value="Dermatologist">Dermatologist</option>
+                <option value="Gynaecologist">Gynaecologist</option>
+                <option value="ENT Specialist">ENT Specialist</option>
+                <option value="General Practitioner">General Practitioner</option>
+                <option value="Aesthetics and Wellness">Aesthetics and Wellness</option>
+                <option value="__other__">Other — please specify below</option>
               </select>
             </div>
             <div class="form-group" id="other-specialty-group" style="display:none">
@@ -643,44 +643,38 @@ document.querySelectorAll('.faq-q').forEach(function(q) {
 // Waitlist form
 function handleWaitlist(e) {
   e.preventDefault();
-  var form = document.getElementById('waitlistForm');
-  var name = document.getElementById('wl-name').value;
-  var email = document.getElementById('wl-email').value;
-  var specialty = document.getElementById('wl-specialty').value;
-  var otherSpecialty = document.getElementById('wl-other-specialty') ? document.getElementById('wl-other-specialty').value : '';
-  var city = document.getElementById('wl-city').value;
 
-  // Build Google Forms submission URL
-  var FORM_ACTION = 'https://docs.google.com/forms/d/e/1FAIpQLScb4UVSqjNYuUhOz4F6vC3sxshn4t6MaL_DDO4etkkyRUtrlA/formResponse';
-  var specialtyValue = specialty === '__other__' ? otherSpecialty : specialty;
+  var email    = (document.getElementById('wl-email')    || {}).value || '';
+  var specialty = (document.getElementById('wl-specialty') || {}).value || '';
+  var city     = (document.getElementById('wl-city')     || {}).value || '';
+  var otherEl  = document.getElementById('wl-other-specialty');
+  var specialtyValue = (specialty === '__other__' && otherEl) ? otherEl.value : specialty;
 
-  var iframe = document.getElementById('gf-hidden');
-  iframe.onload = function() {
-    form.style.display = 'none';
-    document.getElementById('successMsg').style.display = 'block';
-    iframe.onload = null;
-  };
+  var FORM_ID = '1FAIpQLScb4UVSqjNYuUhOz4F6vC3sxshn4t6MaL_DDO4etkkyRUtrlA';
+  var FORM_ACTION = 'https://docs.google.com/forms/d/e/' + FORM_ID + '/formResponse';
 
-  var params = new URLSearchParams();
-  params.append('entry.1578438550', email);
-  params.append('entry.634864307', specialtyValue);
-  params.append('entry.1660624419', city);
-  params.append('entry.1578438550_sentinel', '');
+  // Use no-cors fetch — browser won't reject it, data still lands in Sheet
+  var body = 'entry.1578438550=' + encodeURIComponent(email)
+           + '&entry.634864307='  + encodeURIComponent(specialtyValue)
+           + '&entry.1660624419=' + encodeURIComponent(city);
 
-  var xhr = new XMLHttpRequest();
-  xhr.open('POST', FORM_ACTION, true);
-  xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-  xhr.onreadystatechange = function() {
-    // Google Forms always returns CORS error for XHR — treat any response as success
-    form.style.display = 'none';
-    document.getElementById('successMsg').style.display = 'block';
-  };
-  xhr.onerror = function() {
-    // Expected CORS block — submission still went through
-    form.style.display = 'none';
-    document.getElementById('successMsg').style.display = 'block';
-  };
-  xhr.send(params.toString());
+  function showSuccess() {
+    var form = document.getElementById('waitlistForm');
+    var msg  = document.getElementById('successMsg');
+    if (form) form.style.display = 'none';
+    if (msg)  msg.style.display  = 'block';
+  }
+
+  try {
+    fetch(FORM_ACTION, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: body
+    }).then(showSuccess).catch(showSuccess);
+  } catch(err) {
+    showSuccess();
+  }
 }
 
 // Smooth scroll for anchor links
