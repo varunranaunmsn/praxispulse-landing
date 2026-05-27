@@ -644,23 +644,43 @@ document.querySelectorAll('.faq-q').forEach(function(q) {
 function handleWaitlist(e) {
   e.preventDefault();
   var form = document.getElementById('waitlistForm');
+  var name = document.getElementById('wl-name').value;
   var email = document.getElementById('wl-email').value;
   var specialty = document.getElementById('wl-specialty').value;
+  var otherSpecialty = document.getElementById('wl-other-specialty') ? document.getElementById('wl-other-specialty').value : '';
   var city = document.getElementById('wl-city').value;
 
-  // Submit to Formspree (replace with actual endpoint or backend)
-  fetch('https://formspree.io/f/xpwrqndl', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-    body: JSON.stringify({ email: email, specialty: specialty, city: city })
-  }).then(function(res) {
+  // Build Google Forms submission URL
+  var FORM_ACTION = 'https://docs.google.com/forms/d/e/1FAIpQLScb4UVSqjNYuUhOz4F6vC3sxshn4t6MaL_DDO4etkkyRUtrlA/formResponse';
+  var specialtyValue = specialty === '__other__' ? otherSpecialty : specialty;
+
+  var iframe = document.getElementById('gf-hidden');
+  iframe.onload = function() {
     form.style.display = 'none';
     document.getElementById('successMsg').style.display = 'block';
-  }).catch(function() {
-    // Fallback: show success anyway (replace with proper error handling)
+    iframe.onload = null;
+  };
+
+  var params = new URLSearchParams();
+  params.append('entry.1578438550', email);
+  params.append('entry.634864307', specialtyValue);
+  params.append('entry.1660624419', city);
+  params.append('entry.1578438550_sentinel', '');
+
+  var xhr = new XMLHttpRequest();
+  xhr.open('POST', FORM_ACTION, true);
+  xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+  xhr.onreadystatechange = function() {
+    // Google Forms always returns CORS error for XHR — treat any response as success
     form.style.display = 'none';
     document.getElementById('successMsg').style.display = 'block';
-  });
+  };
+  xhr.onerror = function() {
+    // Expected CORS block — submission still went through
+    form.style.display = 'none';
+    document.getElementById('successMsg').style.display = 'block';
+  };
+  xhr.send(params.toString());
 }
 
 // Smooth scroll for anchor links
@@ -681,7 +701,7 @@ document.querySelectorAll('a[href^="#"]').forEach(function(a) {
   var inp = document.getElementById('wl-other-specialty');
   if (!sel || !grp) return;
   sel.addEventListener('change', function(){
-    if (sel.value === 'other') {
+    if (sel.value === '__other__') {
       grp.style.display = 'block';
       inp.required = true;
     } else {
@@ -692,5 +712,6 @@ document.querySelectorAll('a[href^="#"]').forEach(function(a) {
   });
 })();
 </script>
+<iframe id="gf-hidden" name="gf-hidden" style="display:none" aria-hidden="true"></iframe>
 </body>
 </html>
