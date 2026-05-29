@@ -48,24 +48,25 @@
   "url": "https://www.praxispulse.in",
   "contactPoint": {
     "@type": "ContactPoint",
-    "email": "varun@praxispulse.in",
+    "email": "contact@praxispulse.in",
     "contactType": "customer support"
   }
 }
 </script>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,600,700,800&display=swap" rel="stylesheet">
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: 'Inter', -apple-system, sans-serif; color: #1A202C; line-height: 1.6; }
+body { font-family: 'Satoshi', -apple-system, 'BlinkMacSystemFont', 'Segoe UI', 'Helvetica Neue', sans-serif; color: #1A202C; line-height: 1.6; }
 .container { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
 
 /* Nav */
 nav { padding: 18px 0; border-bottom: 1px solid #EDF2F7; position: sticky; top: 0; background: rgba(255,255,255,0.96); backdrop-filter: blur(8px); z-index: 50; }
 nav .row { display: flex; justify-content: space-between; align-items: center; }
-.logo { font-size: 22px; font-weight: 800; color: #0E9F6E; display: flex; align-items: center; gap: 8px; text-decoration: none; }
-.logo-dot { width: 26px; height: 26px; background: #0E9F6E; border-radius: 50%; position: relative; flex-shrink: 0; }
-.logo-dot::after { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 10px; height: 10px; background: #fff; border-radius: 50%; }
+.logo { font-size: 20px; font-weight: 800; color: #0E9F6E; display: flex; align-items: center; gap: 10px; text-decoration: none; letter-spacing: -0.3px; }
+.logo svg { display: block; flex-shrink: 0; }
+.logo span { color: #1A202C; }
+.logo span em { color: #0E9F6E; font-style: normal; }
 nav .links { display: flex; gap: 28px; align-items: center; }
 nav a { color: #4A5568; text-decoration: none; font-size: 14px; font-weight: 500; }
 nav a:hover { color: #0E9F6E; }
@@ -236,7 +237,14 @@ footer .footer-copy { color: #718096; margin-top: 20px; }
 <!-- NAV -->
 <nav>
   <div class="container row">
-    <a href="/" class="logo"><span class="logo-dot"></span> PraxisPulse</a>
+    <a href="/" class="logo"><svg width="40" height="28" viewBox="0 0 40 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Pulse waveform -->
+  <polyline points="0,14 6,14 9,4 12,22 15,10 18,14 22,14" stroke="#0E9F6E" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <!-- Bar chart rising from pulse end -->
+  <rect x="24" y="18" width="4" height="8" rx="1.2" fill="#0E9F6E" opacity="0.5"/>
+  <rect x="30" y="12" width="4" height="14" rx="1.2" fill="#0E9F6E" opacity="0.75"/>
+  <rect x="36" y="6" width="4" height="20" rx="1.2" fill="#0E9F6E"/>
+</svg><span>Praxis<em>Pulse</em></span></a>
     <div class="links">
       <a href="#features">Features</a>
       <a href="#pricing">Pricing</a>
@@ -423,7 +431,7 @@ footer .footer-copy { color: #718096; margin-top: 20px; }
       <div class="feature-card">
         <div class="feat-icon">⚡</div>
         <h3>Upload &amp; Analyse in Minutes</h3>
-        <p>Already using KiVi, Allenger, Practo Ray, DocPulse, or even Excel? Export a CSV and upload. Your dashboard is live in under 5 minutes — no technical setup, no data migration, no lock-in.</p>
+        <p>Already using KiVi, Allenger, Practo Ray, DocPulse, or even Excel? Export a CSV and upload. Your dashboard is live in under 5 minutes — no technical setup, no data migration, no lock-in. <span style="display:block;margin-top:10px;font-size:13px;color:#718096;">🔒 Your patient data stays private. We never share, sell, or use it to train AI models. Data is encrypted at rest and processed under India's DPDP Act, 2023.</span></p>
         <span class="feat-tag">Works with your existing software</span>
       </div>
     </div>
@@ -496,8 +504,14 @@ footer .footer-copy { color: #718096; margin-top: 20px; }
               <input type="text" id="wl-city" name="city" placeholder="e.g. Chandigarh, Pune" required />
             </div>
           </div>
+          <div class="form-group" style="margin-bottom:10px;">
+            <label style="display:flex;align-items:flex-start;gap:10px;font-size:13px;color:rgba(255,255,255,0.75);cursor:pointer;font-weight:500;">
+              <input type="checkbox" id="wl-agree" required style="margin-top:2px;width:auto;flex-shrink:0;accent-color:#0E9F6E;" />
+              <span>I have read and agree to the <a href="/privacy" target="_blank" style="color:#0E9F6E;text-decoration:underline;">Privacy Policy</a> and <a href="/terms" target="_blank" style="color:#0E9F6E;text-decoration:underline;">Terms of Service</a>. I understand PraxisPulse is a business analytics tool, not a clinical diagnosis application.</span>
+            </label>
+          </div>
           <button type="submit" class="form-submit">Join the Early Access Waitlist →</button>
-          <p class="form-disclaimer">No spam. No credit card. We'll contact you to schedule a personal walkthrough.</p>
+          <p class="form-disclaimer">No spam. No credit card. We'll contact you to schedule a personal walkthrough. Your data is handled per India's DPDP Act, 2023.</p>
         </form>
         <div class="success-msg" id="successMsg">
           🎉 You're on the list! Our team will reach out to schedule your personal clinic setup.
@@ -556,9 +570,15 @@ footer .footer-copy { color: #718096; margin-top: 20px; }
           <li>API access</li>
           <li>Dedicated success manager</li>
         </ul>
-        <a href="mailto:varun@praxispulse.in" class="btn-secondary">Contact us</a>
+        <a href="mailto:contact@praxispulse.in" class="btn-secondary">Contact us</a>
       </div>
     </div>
+  </div>
+  <p style="text-align:center;font-size:12px;color:#A0AEC0;margin-top:32px;max-width:600px;margin-left:auto;margin-right:auto;">
+      PraxisPulse is a business intelligence and analytics platform. It does not provide medical advice, clinical diagnoses, or prescription recommendations. Subscription pricing is exclusive of applicable taxes.
+      <a href="/refund" style="color:#0E9F6E;text-decoration:none;margin-left:6px;">Refund Policy</a> &nbsp;·&nbsp;
+      <a href="/terms" style="color:#0E9F6E;text-decoration:none;">Terms of Service</a>
+    </p>
   </div>
 </section>
 
@@ -617,15 +637,25 @@ footer .footer-copy { color: #718096; margin-top: 20px; }
 <footer>
   <div class="container">
     <div class="row">
-      <a href="/" class="footer-logo"><span class="logo-dot"></span> PraxisPulse</a>
+      <a href="/" class="footer-logo" style="font-size:20px;font-weight:800;color:#0E9F6E;display:flex;align-items:center;gap:10px;text-decoration:none;"><svg width="40" height="28" viewBox="0 0 40 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Pulse waveform -->
+  <polyline points="0,14 6,14 9,4 12,22 15,10 18,14 22,14" stroke="#0E9F6E" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <!-- Bar chart rising from pulse end -->
+  <rect x="24" y="18" width="4" height="8" rx="1.2" fill="#0E9F6E" opacity="0.5"/>
+  <rect x="30" y="12" width="4" height="14" rx="1.2" fill="#0E9F6E" opacity="0.75"/>
+  <rect x="36" y="6" width="4" height="20" rx="1.2" fill="#0E9F6E"/>
+</svg><span style="color:#fff;">Praxis<span style="color:#0E9F6E;">Pulse</span></span></a>
       <div class="footer-links">
         <a href="/privacy">Privacy Policy</a>
         <a href="/terms">Terms of Service</a>
-        <a href="mailto:varun@praxispulse.in">varun@praxispulse.in</a>
+        <a href="/refund">Refund Policy</a>
+        <a href="/disclaimer">Disclaimer</a>
+        <a href="mailto:contact@praxispulse.in">contact@praxispulse.in</a>
         <a href="https://wa.me/916280350684">WhatsApp Us</a>
       </div>
     </div>
-    <p class="footer-copy">© 2025 PraxisPulse. All rights reserved. Built for independent clinic doctors across India.</p>
+    <p class="footer-copy">© 2025 <strong>PraxisPulse Technology Pvt. Ltd.</strong> (A branch of <strong>Aarka Ventures</strong>) All rights reserved. Built for independent clinic doctors across India.<br>
+    <span style="font-size:11px;color:#4A5568;margin-top:6px;display:block;">PraxisPulse is a business analytics tool. It does not provide medical advice or clinical diagnoses. Patient data is handled in compliance with India's Digital Personal Data Protection (DPDP) Act, 2023.</span></p>
   </div>
 </footer>
 
