@@ -48,7 +48,7 @@
   "url": "https://www.praxispulse.in",
   "contactPoint": {
     "@type": "ContactPoint",
-    "email": "contact@praxispulse.in",
+    "email": "support@praxispulse.in",
     "contactType": "customer support"
   }
 }
@@ -531,55 +531,47 @@ footer .footer-copy { color: #718096; margin-top: 20px; }
     <p class="lead center">No setup fees. No annual lock-in. First 30 days free. Cancel anytime.</p>
     <div class="pricing">
       <div class="tier">
-        <h3>Base</h3>
+        <h3>Basic</h3>
         <p class="tier-sub">For single-doctor clinics getting started</p>
-        <div class="price">₹1,499 <span class="price-period">/month</span></div>
+        <div class="price">₹2,999 <span class="price-period">/month</span></div>
         <ul>
-          <li>Up to 1,000 active patients</li>
-          <li>2 user logins (owner + receptionist)</li>
-          <li>Weekly AI insights</li>
-          <li>Revenue &amp; KPI dashboard</li>
-          <li>WhatsApp recall (500 msgs/mo)</li>
-          <li>Email support</li>
+          <li>Up to 3 user logins</li>
+          <li>Unlimited patients</li>
+          <li>Full analytics dashboard</li>
+          <li>Recall automations</li>
+          <li>WhatsApp integration (blast + reminders)</li>
+          <li>CSV upload &amp; data export</li>
+          <li>Source attribution &amp; LTV insights</li>
+          <li>7-day free trial — no card required</li>
         </ul>
-        <a href="#waitlist" class="btn-secondary">Join waitlist</a>
+        <a href="mailto:signup@praxispulse.in" class="btn-secondary">Get started — email us to activate</a>
       </div>
       <div class="tier popular">
-        <span class="pop-badge">Most Popular</span>
-        <h3>Growth</h3>
-        <p class="tier-sub">For multi-doctor clinics &amp; serious operators</p>
-        <div class="price">₹3,499 <span class="price-period">/month</span></div>
-        <ul>
-          <li>Up to 5,000 active patients</li>
-          <li>10 user logins, all roles</li>
-          <li>Daily AI insights + Monday digest</li>
-          <li>Predictive no-show &amp; churn AI</li>
-          <li>WhatsApp recall (2,000 msgs/mo)</li>
-          <li>Growth analytics &amp; source ROI</li>
-          <li>Priority chat support</li>
-        </ul>
-        <a href="#waitlist" class="btn-primary">Join waitlist</a>
-      </div>
-      <div class="tier">
+        <span class="pop-badge">★ Recommended</span>
         <h3>Pro</h3>
-        <p class="tier-sub">For multi-location chains &amp; group practices</p>
-        <div class="price">₹9,999 <span class="price-period">/mo + ₹999/location</span></div>
+        <p class="tier-sub">For growing clinics that need more power and more team</p>
+        <div class="price">₹4,999 <span class="price-period">/ month</span></div>
         <ul>
-          <li>Unlimited patients</li>
-          <li>Unlimited users, network view</li>
-          <li>White-label branding</li>
-          <li>Unlimited WhatsApp automation</li>
-          <li>API access</li>
-          <li>Dedicated success manager</li>
+          <li>Everything in Basic</li>
+          <li>Up to 8 user logins with roles</li>
+          <li>Real-time sync agent</li>
+          <li>Specialty benchmarks (anonymised peer data)</li>
+          <li>Priority support</li>
+          <li>7-day free trial — no card required</li>
         </ul>
-        <a href="mailto:contact@praxispulse.in" class="btn-secondary">Contact us</a>
+        <a href="mailto:signup@praxispulse.in" class="btn-primary">Get started — email us to activate</a>
       </div>
+    </div>
+    <div style="text-align:center;margin-top:40px;padding:32px;background:#F7FAFC;border-radius:12px;max-width:600px;margin-left:auto;margin-right:auto;">
+      <p style="font-size:14px;font-weight:600;color:#0E9F6E;margin-bottom:8px;">⚡ Pro+</p>
+      <p style="font-size:14px;color:#4A5568;margin:0;">For multi-chair clinics, group practices and hospitals — more users, chain-level analytics, and white-labelling. <strong>Coming soon</strong>. <a href="mailto:support@praxispulse.in" style="color:#0E9F6E;text-decoration:underline;">Email us</a> for early access.</p>
     </div>
   </div>
   <p style="text-align:center;font-size:12px;color:#A0AEC0;margin-top:32px;max-width:600px;margin-left:auto;margin-right:auto;">
       PraxisPulse is a business intelligence and analytics platform. It does not provide medical advice, clinical diagnoses, or prescription recommendations. Subscription pricing is exclusive of applicable taxes.
       <a href="/refund.html" style="color:#0E9F6E;text-decoration:none;margin-left:6px;">Refund Policy</a> &nbsp;·&nbsp;
-      <a href="/terms.html" style="color:#0E9F6E;text-decoration:none;">Terms of Service</a>
+      <a href="/terms.html" style="color:#0E9F6E;text-decoration:none;">Terms of Service</a> &nbsp;·&nbsp;
+      <a href="mailto:feedback@praxispulse.in" style="color:#0E9F6E;text-decoration:none;">Send Feedback</a>
     </p>
   </div>
 </section>
@@ -652,7 +644,8 @@ footer .footer-copy { color: #718096; margin-top: 20px; }
         <a href="/terms.html">Terms of Service</a>
         <a href="/refund.html">Refund Policy</a>
         <a href="/disclaimer.html">Disclaimer</a>
-        <a href="mailto:contact@praxispulse.in">contact@praxispulse.in</a>
+        <a href="mailto:support@praxispulse.in">support@praxispulse.in</a>
+        <a href="mailto:feedback@praxispulse.in">feedback@praxispulse.in</a>
         <a href="https://wa.me/916280350684">WhatsApp Us</a>
       </div>
     </div>
@@ -682,13 +675,13 @@ function handleWaitlist(e) {
   var otherEl  = document.getElementById('wl-other-specialty');
   var specialtyValue = (specialty === '__other__' && otherEl) ? otherEl.value : specialty;
 
-  var FORM_ID = '1FAIpQLScb4UVSqjNYuUhOz4F6vC3sxshn4t6MaL_DDO4etkkyRUtrlA';
-  var FORM_ACTION = 'https://docs.google.com/forms/d/e/' + FORM_ID + '/formResponse';
-
-  // Use no-cors fetch — browser won't reject it, data still lands in Sheet
-  var body = 'entry.1578438550=' + encodeURIComponent(email)
-           + '&entry.634864307='  + encodeURIComponent(specialtyValue)
-           + '&entry.1660624419=' + encodeURIComponent(city);
+  // Construct email subject and body
+  var subject = encodeURIComponent('New Signup - ' + specialtyValue + ' in ' + city);
+  var body = encodeURIComponent(
+    'Name/Email: ' + email + '\n' +
+    'Specialty: ' + specialtyValue + '\n' +
+    'City: ' + city
+  );
 
   function showSuccess() {
     var form = document.getElementById('waitlistForm');
@@ -697,16 +690,9 @@ function handleWaitlist(e) {
     if (msg)  msg.style.display  = 'block';
   }
 
-  try {
-    fetch(FORM_ACTION, {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: body
-    }).then(showSuccess).catch(showSuccess);
-  } catch(err) {
-    showSuccess();
-  }
+  // Send email via mailto link
+  window.location.href = 'mailto:signup@praxispulse.in?subject=' + subject + '&body=' + body;
+  showSuccess();
 }
 
 // Smooth scroll for anchor links
