@@ -26,7 +26,7 @@
   "applicationCategory": "BusinessApplication",
   "operatingSystem": "Web",
   "description": "AI growth platform built only for dermatology and aesthetics clinics in India — patient records, packages and sessions, before & after clinical photography, WhatsApp recall, GST invoicing and AI-powered growth insight.",
-  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR", "description": "Free for our first 200 clinics — no credit card" },
+  "offers": { "@type": "Offer", "priceCurrency": "INR", "availability": "https://schema.org/LimitedAvailability", "description": "Early-bird access for founding clinics" },
   "publisher": { "@type": "Organization", "name": "Aarka Ventures", "url": "https://www.praxispulse.in" }
 }
 </script>
@@ -51,7 +51,7 @@ nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.92);backdrop-
 .btn-p{background:var(--g);color:#fff}.btn-p:hover{background:var(--g-dark)}
 .btn-o{border:1.5px solid var(--line);color:var(--ink)}.btn-o:hover{border-color:var(--g);color:var(--g)}
 /* hero */
-.hero{background:linear-gradient(160deg,var(--g-soft) 0%,#fff 55%);padding:72px 0 64px;border-bottom:1px solid var(--line)}
+.hero{background:linear-gradient(160deg,var(--g-soft) 0%,#fff 55%);padding:72px 0 64px;border-bottom:1px solid var(--line);overflow:hidden}
 .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center}
 .pill{display:inline-flex;align-items:center;gap:8px;background:var(--g-mint);color:var(--g-dark);font-size:13px;font-weight:700;padding:6px 16px;border-radius:99px;margin-bottom:22px;letter-spacing:.02em}
 h1{font-size:52px;line-height:1.08;font-weight:900;letter-spacing:-1.2px;margin-bottom:20px}
@@ -62,24 +62,27 @@ h1 em{font-style:normal;color:var(--g)}
 .chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
 .chip{font-size:13px;font-weight:600;color:var(--g-dark);background:#fff;border:1px solid var(--g-mint);border-radius:99px;padding:6px 14px}
 /* hero mock */
-.mock{background:#fff;border:1px solid var(--line);border-radius:20px;box-shadow:0 30px 60px -20px rgba(14,159,110,.18);overflow:hidden}
-.mock-bar{display:flex;align-items:center;justify-content:space-between;background:var(--dark);color:#cfe0d6;font-size:12.5px;padding:10px 18px}
+.mock-stage{position:relative;perspective:1600px}
+.mock-stage::before{content:"";position:absolute;inset:-10% -8% -14% -8%;background:radial-gradient(58% 58% at 62% 32%,rgba(14,159,110,.20),rgba(14,159,110,0) 70%);filter:blur(26px);z-index:0;pointer-events:none}
+.mock{position:relative;z-index:1;background:#fff;border:1px solid var(--line);border-radius:20px;overflow:hidden;transform:rotateY(-11deg) rotateX(5deg);transform-origin:60% 50%;box-shadow:-32px 46px 90px -38px rgba(11,122,85,.42),-6px 12px 30px -14px rgba(18,32,25,.22),inset 0 1px 0 rgba(255,255,255,.7);transition:transform .6s cubic-bezier(.2,.7,.2,1),box-shadow .6s cubic-bezier(.2,.7,.2,1)}
+.mock:hover{transform:rotateY(-3deg) rotateX(1.5deg);box-shadow:-20px 34px 74px -34px rgba(11,122,85,.36),-4px 10px 26px -14px rgba(18,32,25,.20),inset 0 1px 0 rgba(255,255,255,.7)}
+.mock-bar{display:flex;align-items:center;justify-content:space-between;background:linear-gradient(180deg,#16281F,#101A14);color:#cfe0d6;font-size:12.5px;padding:10px 18px}
 .mock-bar b{color:#fff}
 .mock-body{padding:20px}
 .mock-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:14px}
-.kpi{background:var(--g-soft);border:1px solid var(--g-mint);border-radius:12px;padding:12px 14px}
+.kpi{background:linear-gradient(158deg,#ffffff,var(--g-soft));border:1px solid var(--g-mint);border-radius:13px;padding:12px 14px;box-shadow:0 8px 16px -12px rgba(14,159,110,.45),inset 0 1px 0 rgba(255,255,255,.85)}
 .kpi small{display:block;font-size:11px;color:var(--mut);font-weight:600;text-transform:uppercase;letter-spacing:.04em}
 .kpi b{font-size:19px;color:var(--ink)}
 .kpi span{font-size:11.5px;color:var(--g-dark);font-weight:700}
-.mock-row{display:flex;align-items:center;justify-content:space-between;border:1px solid var(--line);border-radius:12px;padding:11px 14px;margin-bottom:9px;font-size:13.5px}
+.mock-row{display:flex;align-items:center;justify-content:space-between;border:1px solid var(--line);border-radius:12px;padding:11px 14px;margin-bottom:9px;font-size:13.5px;background:linear-gradient(180deg,#fff,#FCFEFD);box-shadow:0 6px 14px -12px rgba(18,32,25,.25)}
 .mock-row .t b{display:block;color:var(--ink)}
 .mock-row .t small{color:var(--mut);font-size:12px}
 .prog{width:110px;height:8px;background:#EDF2F7;border-radius:99px;overflow:hidden}
-.prog i{display:block;height:100%;background:var(--g);border-radius:99px}
+.prog i{display:block;height:100%;background:linear-gradient(90deg,var(--g),#34D399);border-radius:99px;box-shadow:0 0 8px rgba(14,159,110,.5)}
 .ba{display:flex;gap:6px}
-.ba i{width:34px;height:34px;border-radius:8px;background:linear-gradient(135deg,#FBD8C2,#EFB596);display:block}
-.ba i+i{background:linear-gradient(135deg,#F7E7D8,#F2CDB2)}
-.mock-alert{background:var(--g-soft);border-left:3px solid var(--g);border-radius:0 10px 10px 0;padding:11px 14px;font-size:13px;color:#276749;margin-top:6px}
+.ba i{width:36px;height:36px;border-radius:9px;background:linear-gradient(135deg,#FBD8C2,#E9A883);display:block;box-shadow:0 6px 12px -6px rgba(180,120,90,.55),inset 0 1px 0 rgba(255,255,255,.45)}
+.ba i+i{background:linear-gradient(135deg,#F7E7D8,#EEC4A4)}
+.mock-alert{background:linear-gradient(180deg,var(--g-soft),#fff);border-left:3px solid var(--g);border-radius:0 10px 10px 0;padding:11px 14px;font-size:13px;color:#276749;margin-top:6px;box-shadow:0 8px 18px -14px rgba(14,159,110,.5)}
 .mock-alert b{color:#1C4532}
 .mock-cap{font-size:11.5px;color:var(--mut);text-align:center;padding:10px;border-top:1px solid var(--line)}
 /* sections */
@@ -93,9 +96,10 @@ h2{font-size:38px;font-weight:900;letter-spacing:-.8px;line-height:1.15;margin-b
 .strip b{color:#fff;font-weight:700}
 /* features */
 .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:44px}
-.card{border:1px solid var(--line);border-radius:16px;padding:26px;position:relative;background:#fff;transition:.15s}
-.card:hover{border-color:var(--g);box-shadow:0 14px 34px -18px rgba(14,159,110,.25)}
-.card .ico{width:44px;height:44px;border-radius:12px;background:var(--g-soft);display:flex;align-items:center;justify-content:center;font-size:21px;margin-bottom:16px}
+.card{border:1px solid var(--line);border-radius:16px;padding:26px;position:relative;background:#fff;transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease;box-shadow:0 4px 14px -12px rgba(18,32,25,.30)}
+.card:hover{border-color:var(--g);box-shadow:0 20px 40px -20px rgba(14,159,110,.30);transform:translateY(-3px)}
+.card .ico{width:46px;height:46px;border-radius:13px;background:linear-gradient(145deg,#ffffff,var(--g-soft));display:flex;align-items:center;justify-content:center;font-size:21px;margin-bottom:16px;box-shadow:0 10px 20px -12px rgba(14,159,110,.5),inset 0 1px 0 rgba(255,255,255,.9);transition:transform .18s ease}
+.card:hover .ico{transform:translateY(-2px)}
 .card h3{font-size:18.5px;font-weight:800;margin-bottom:8px}
 .card p{font-size:14.8px;color:var(--body)}
 .badge{position:absolute;top:20px;right:20px;font-size:10.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:4px 10px;border-radius:99px}
@@ -153,6 +157,8 @@ footer h6{color:#fff;font-size:13px;font-weight:800;text-transform:uppercase;let
  .f-grid{grid-template-columns:1fr}
  .nav-links{display:none}
  h2{font-size:30px}
+ .mock{transform:none}
+ .mock-stage::before{inset:-4%}
 }
 </style>
 </head>
@@ -168,7 +174,7 @@ footer h6{color:#fff;font-size:13px;font-weight:800;text-transform:uppercase;let
   </div>
   <div class="nav-cta">
     <a class="btn btn-o" href="https://app.praxispulse.in/login">Login</a>
-    <a class="btn btn-p" href="https://app.praxispulse.in/signup">Start free</a>
+    <a class="btn btn-p" href="https://app.praxispulse.in/signup">Get early access</a>
   </div>
 </div></nav>
 
@@ -178,17 +184,18 @@ footer h6{color:#fff;font-size:13px;font-weight:800;text-transform:uppercase;let
     <h1>The AI growth engine for your <em>skin clinic</em>.</h1>
     <p class="hero-sub">PraxisPulse runs your day — patients, appointments, treatment packages, before &amp; after photos and GST invoices — then its AI reads your own data and tells you what to do next: which treatments earn, which patients are due back, and how your clinic compares in your city.</p>
     <div class="hero-btns">
-      <a class="btn btn-p" href="https://app.praxispulse.in/signup">Start free</a>
+      <a class="btn btn-p" href="https://app.praxispulse.in/signup">Get early access</a>
       <a class="btn btn-o" href="#features">See the platform</a>
     </div>
-    <p class="hero-note"><b>Free for our first 200 clinics</b> — no card, no paywall, no catch.</p>
+    <p class="hero-note"><b>Early-bird access is open</b> — priority onboarding for founding clinics.</p>
     <div class="chips">
       <span class="chip">🇮🇳 Data on Indian servers</span>
       <span class="chip">DPDP-compliant photo storage</span>
-      <span class="chip">Never trains AI on your patients</span>
+      <span class="chip">AI trained only with your consent</span>
       <span class="chip">Set up in 15 minutes</span>
     </div>
   </div>
+  <div class="mock-stage">
   <div class="mock">
     <div class="mock-bar"><span><b>Aura Skin &amp; Aesthetics</b> · Indore</span><span>app.praxispulse.in</span></div>
     <div class="mock-body">
@@ -209,6 +216,7 @@ footer h6{color:#fff;font-size:13px;font-weight:800;text-transform:uppercase;let
     </div>
     <div class="mock-cap">A real PraxisPulse view · figures shown are sample clinic data</div>
   </div>
+  </div>
 </div></header>
 
 <div class="strip"><div class="wrap">
@@ -218,7 +226,7 @@ footer h6{color:#fff;font-size:13px;font-weight:800;text-transform:uppercase;let
 
 <section id="features"><div class="wrap">
   <p class="kicker">The platform</p>
-  <h2>Everything a derma practice needs.<br/>Nothing a hospital does.</h2>
+  <h2>Everything a skin clinic needs.<br/>Nothing it doesn't.</h2>
   <p class="lead">Generic clinic software treats you like a GP. PraxisPulse is shaped around courses of treatment, visible results, and patients who come back — the economics of dermatology and aesthetics.</p>
   <div class="grid3">
     <div class="card"><span class="badge b-live">Live</span><div class="ico">📸</div><h3>Before &amp; after photography</h3><p>Upload clinical photos to each patient's timeline. Compare sittings side-by-side, show progress in the chair, and build the proof your results deserve — stored consent-first under DPDP.</p></div>
@@ -229,7 +237,7 @@ footer h6{color:#fff;font-size:13px;font-weight:800;text-transform:uppercase;let
     <div class="card"><span class="badge b-live">Live</span><div class="ico">🗂️</div><h3>Records &amp; appointments</h3><p>Every patient, visit note, document and booking in one searchable place — with a calendar your front desk actually enjoys. Import from your current software in minutes.</p></div>
     <div class="card"><span class="badge b-soon">Early access</span><div class="ico">📅</div><h3>Online booking</h3><p>Share a booking link in your Instagram bio or on WhatsApp and let patients pick a slot themselves — straight into your calendar, no phone tag or missed calls.</p></div>
     <div class="card"><span class="badge b-soon">Early access</span><div class="ico">⭐</div><h3>Reputation &amp; Google reviews</h3><p>After a visit, a one-tap request nudges happy patients to your Google listing — turning real results into the reviews the next patient searches for.</p></div>
-    <div class="card"><span class="badge b-soon">Early access</span><div class="ico">🤳</div><h3>AI skin analysis</h3><p>Snap a patient photo and AI reads the skin — pigmentation, texture, pores, acne — as a consult opener and treatment recommendation, the way Korea's top clinics run pre-consultation. Runs on a normal phone; no extra machine.</p></div>
+    <div class="card"><span class="badge b-soon">Early access</span><div class="ico">🤳</div><h3>AI skin analysis</h3><p>Snap a patient photo and AI reads the skin — pigmentation, texture, pores, acne — as a consult opener and treatment recommendation, the pre-consultation standard at the world's leading skin clinics. Runs on a normal phone; no extra machine.</p></div>
   </div>
 </div></section>
 
@@ -284,9 +292,9 @@ footer h6{color:#fff;font-size:13px;font-weight:800;text-transform:uppercase;let
 <section id="skinlab" style="background:linear-gradient(160deg,#F0FFF4,#fff);border-top:1px solid var(--line);border-bottom:1px solid var(--line)"><div class="wrap">
   <p class="kicker">AI Skin Lab · Early access</p>
   <h2>Clinical-grade skin analysis.<br/>From a single photo.</h2>
-  <p class="lead">The consultation ritual that made Korea's top skin clinics famous is coming to PraxisPulse — AI facial analysis that reads wrinkles, pigmentation, acne, texture and more from one photo, right in the chair.</p>
+  <p class="lead">The pre-consultation skin scan that defines the world's most advanced aesthetic clinics is coming to PraxisPulse — AI facial analysis that reads wrinkles, pigmentation, acne, texture and more from a single photo, right in the chair.</p>
   <div class="grid3">
-    <div class="card"><span class="badge b-soon">Early access</span><div class="ico">📷</div><h3>Scan in the consult</h3><p>One photo on any phone or tablet — no imaging booth, no hardware. AI maps the skin across 10+ concern areas in seconds, powered by clinical-grade imaging partners.</p></div>
+    <div class="card"><span class="badge b-soon">Early access</span><div class="ico">📷</div><h3>Scan in the consult</h3><p>One photo on any phone or tablet — no imaging booth, no hardware. AI maps the skin across 10+ concern areas in seconds, with clinical-grade accuracy.</p></div>
     <div class="card"><span class="badge b-soon">Early access</span><div class="ico">🧭</div><h3>Analysis becomes the plan</h3><p>The scan turns into a conversation: concern scores link to your treatment menu — peels, laser, PRP — so every consult ends with a clear, personalised course.</p></div>
     <div class="card"><span class="badge b-soon">Early access</span><div class="ico">📈</div><h3>Progress patients can see</h3><p>Re-scan at every sitting. Scores move, photos compare side-by-side — proof that keeps patients committed to the full package, and referring their friends.</p></div>
   </div>
@@ -299,7 +307,7 @@ footer h6{color:#fff;font-size:13px;font-weight:800;text-transform:uppercase;let
   <div class="t-grid">
     <div class="t-card"><h5>🇮🇳 Hosted in India</h5><p>Your data lives on Indian servers and is handled under the DPDP Act, 2023 — never offshore.</p></div>
     <div class="t-card"><h5>Consent-first photos</h5><p>Photos are captured and stored with patient consent, encrypted, and visible only to your clinic.</p></div>
-    <div class="t-card"><h5>Never trains AI</h5><p>Your patients' photos and records are never used to train any AI model — ours or anyone else's.</p></div>
+    <div class="t-card"><h5>Consent-based AI training</h5><p>Your patients' photos and records train AI only with your clinic's explicit consent — and are never shared with anyone else's model.</p></div>
     <div class="t-card"><h5>Yours to take</h5><p>We never sell or share your records. Leave anytime — export everything, delete everything, in one click.</p></div>
   </div>
 </div></section>
@@ -309,20 +317,20 @@ footer h6{color:#fff;font-size:13px;font-weight:800;text-transform:uppercase;let
   <h2>Straight answers.</h2>
   <div style="margin-top:36px">
     <div class="fitem open"><div class="fq">Is PraxisPulse really built only for dermatology &amp; aesthetics? <span class="pm">+</span></div><div class="fa"><p>Yes. We removed everything generic. Packages and sessions, before &amp; after photography, treatment-wise revenue, recall for repeat courses — the product is shaped around how a skin clinic earns, whether you run medical dermatology, aesthetics, or both.</p></div></div>
-    <div class="fitem"><div class="fq">How do before &amp; after photos work — and are they safe? <span class="pm">+</span></div><div class="fa"><p>Upload photos to a patient's timeline at each sitting and compare side-by-side in the chair. Photos are stored encrypted on Indian servers, consent-first under the DPDP Act, 2023, visible only to your clinic, and never used to train AI. Delete them anytime.</p></div></div>
+    <div class="fitem"><div class="fq">How do before &amp; after photos work — and are they safe? <span class="pm">+</span></div><div class="fa"><p>Upload photos to a patient's timeline at each sitting and compare side-by-side in the chair. Photos are stored encrypted on Indian servers, consent-first under the DPDP Act, 2023, visible only to your clinic, and used to train AI only with your consent. Delete them anytime.</p></div></div>
     <div class="fitem"><div class="fq">What does the AI actually do? <span class="pm">+</span></div><div class="fa"><p>It analyses your clinic's own data and answers in plain English: your top-earning treatments, patients due to return, seasonal peaks, marketing that pays back. As your history builds, it benchmarks you against your city and your field. Photo-based AI skin analysis for consultations is in early access.</p></div></div>
     <div class="fitem"><div class="fq">Can it track my laser and PRP packages? <span class="pm">+</span></div><div class="fa"><p>Yes — that's a core feature in early access. Define a course (say, 6 laser sessions), and PraxisPulse tracks sessions done, sessions left, and who's gone quiet mid-package, with a one-tap WhatsApp nudge to bring them back.</p></div></div>
     <div class="fitem"><div class="fq">How do I move from my current software or Excel? <span class="pm">+</span></div><div class="fa"><p>Export your data as a file — most tools do this in two clicks — and upload it. PraxisPulse sorts the columns out for you, flags quality issues, and most clinics are set up in about 15 minutes. Our team is on WhatsApp if you'd like a hand.</p></div></div>
-    <div class="fitem"><div class="fq">What does it cost? <span class="pm">+</span></div><div class="fa"><p>It's free for our first 200 founding clinics — no credit card, no paywalls, no hidden charges. The full platform, including AI insight. You can leave anytime and export all your data with one click.</p></div></div>
+    <div class="fitem"><div class="fq">What does it cost? <span class="pm">+</span></div><div class="fa"><p>We're in an early-bird phase for founding clinics, with preferred terms for early adopters — including full AI insight. There's no credit card to get started, and you can leave anytime and export all your data in one click. Message us on WhatsApp for current early-bird details.</p></div></div>
     <div class="fitem"><div class="fq">Can it handle my Instagram &amp; WhatsApp enquiries? <span class="pm">+</span></div><div class="fa"><p>Yes — that's PraxisPulse Connect. WhatsApp, Instagram, Facebook, JustDial and Practo enquiries come into one inbox, an AI front desk drafts each reply for you to approve, and a simple pipeline moves every enquiry from new to consult-booked (which adds the patient to your records automatically). WhatsApp and Instagram channels roll out as we complete Meta's approval; you can try the full flow today with demo data.</p></div></div>
-    <div class="fitem"><div class="fq">Do you offer AI skin analysis from photos? <span class="pm">+</span></div><div class="fa"><p>It's in early access. Clinics in Korea and Japan now open consultations with an AI photo scan — the patient sees their own skin scored for pigmentation, texture, pores and acne, which leads naturally into a treatment plan. PraxisPulse is integrating the same class of AI used by global beauty brands, so it runs on a normal phone or tablet — no ₹5–15 lakh skin-analysis machine — with every photo stored consent-first under the DPDP Act, 2023.</p></div></div>
+    <div class="fitem"><div class="fq">Do you offer AI skin analysis from photos? <span class="pm">+</span></div><div class="fa"><p>It's in early access. The world's most advanced clinics now open consultations with an AI photo scan — the patient sees their own skin scored for pigmentation, texture, pores and acne, which leads naturally into a treatment plan. PraxisPulse is bringing that same clinical-grade analysis to any phone or tablet — no dedicated skin-analysis machine — with every photo stored consent-first under the DPDP Act, 2023.</p></div></div>
   </div>
 </div></section>
 
 <section class="cta"><div class="wrap">
   <h2>Run it today.<br/>Grow with it for years.</h2>
-  <p>Free for our first 200 clinics, with personal onboarding included. Your clinic's data, finally working for you.</p>
-  <a class="btn btn-p" style="font-size:17px;padding:15px 34px" href="https://app.praxispulse.in/signup">Start free</a>
+  <p>Early-bird onboarding is open for founding clinics — personal setup included. Your clinic's data, finally working for you.</p>
+  <a class="btn btn-p" style="font-size:17px;padding:15px 34px" href="https://app.praxispulse.in/signup">Get early access</a>
   <p style="margin-top:16px;font-size:14px">No credit card · Set up in 15 minutes · Cancel anytime</p>
 </div></section>
 
@@ -337,7 +345,7 @@ footer h6{color:#fff;font-size:13px;font-weight:800;text-transform:uppercase;let
     </div>
     <div class="f-col">
       <h6>Product</h6>
-      <a href="https://app.praxispulse.in/signup">Start free</a>
+      <a href="https://app.praxispulse.in/signup">Get early access</a>
       <a href="https://app.praxispulse.in/login">Login</a>
       <a href="#features">Platform</a>
       <a href="#insight">AI insight</a>
@@ -356,7 +364,7 @@ footer h6{color:#fff;font-size:13px;font-weight:800;text-transform:uppercase;let
   </div>
   <div class="f-bottom">
     © 2026 <strong style="color:#cfe0d6;">Aarka Ventures</strong>. PraxisPulse is a product of Aarka Ventures — a micro-enterprise registered with the Ministry of MSME, Govt. of India. Built for dermatology &amp; aesthetics clinics across India.
-    <span class="dis">PraxisPulse is a business-analytics and clinic-management tool. It does not provide medical advice, clinical diagnoses or treatment recommendations. Patient data and clinical photographs are handled in compliance with India's Digital Personal Data Protection (DPDP) Act, 2023, stored on Indian servers, and never used to train AI models.</span>
+    <span class="dis">PraxisPulse is a business-analytics and clinic-management tool. It does not provide medical advice, clinical diagnoses or treatment recommendations. Patient data and clinical photographs are handled in compliance with India's Digital Personal Data Protection (DPDP) Act, 2023, stored on Indian servers, and used to train AI models only with explicit consent.</span>
   </div>
 </div></footer>
 
